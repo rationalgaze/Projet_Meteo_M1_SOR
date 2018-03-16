@@ -48,9 +48,9 @@ public class Connection extends HttpServlet {
       // test des regexp trouvée dans le bean
       v.regexp(bean.Compte.class,"mail", id);
       v.regexp(bean.Compte.class,"password", mdp);
-      
+            
       if (v.isValide()) {
-    		if (id.equals("login@mail.ru") && mdp.equals("123")) {
+    		if (manager.auth(id, mdp)) {
     		  System.out.println("ident OK");
     		  manager.setIdentifie(true);
     		  manager.setIdent(id);
@@ -58,7 +58,7 @@ public class Connection extends HttpServlet {
     		  return;
     		} else {
     		  System.out.println("err OK");
-    		  request.setAttribute("msg", "Erreur identification");
+    		  request.setAttribute("msg", "Erreur d'identification : le mot de passe ou login ne sont pas correctes.");
     	    request.setAttribute("contenu", "/WEB-INF/auth/LoginForm.jsp");
     	    request.getServletContext().getRequestDispatcher("/WEB-INF/header/header.jsp").forward(request, response);
     		}

@@ -5,12 +5,50 @@
 .site-nav .container a{
 	color: #fff;
 }
+.contenu {
+	position: relative;
+}
+
+.animation {
+	position: absolute;
+	width: 500px;
+	height: 270px;
+	background: url('../images/nuage_1.png') center center no-repeat;
+  animation: myfirst 15s;
+  animation-direction: normal;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear
+}
+.nuage1 {
+	top: 150px;
+  left: -5%;
+}
+
+.nuage2 {
+	top: 400px;
+  left: -75%;
+  animation: mysecond 13s;
+  animation-direction: normal;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear
+}
+
+@keyframes myfirst {
+    0%   { left: -75%; top: 170px;}
+    100% { left: 150%; top: 200px;}
+}
+
+@keyframes mysecond {
+    0%   { left: -105%; top: 400px;}
+    100% { left: 150%; top: 400px;}
+}
 
 main {
 	min-height: calc(100vh - 56px);  
 	color: #fff;
 	background: linear-gradient(to bottom, rgba(58,155,249,0.7) 0%, rgba(102,102,102,0) 90%);
 	z-index: 0;
+	overflow: hidden;
 }
 
 form {
@@ -37,3 +75,13 @@ form {
 .npill span {
 	vertical-align: middle;
 }
+
+.mod-btn i {
+	vertical-align: middle;
+}
+
+#modifModal {
+  color: #000;
+}
+
+

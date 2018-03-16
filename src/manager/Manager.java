@@ -1,6 +1,5 @@
 package manager;
 
-import bean.Meteo;
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -15,6 +14,7 @@ import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 
+import bean.Meteo;
 import rmi.ServeurRMI;
 
 
@@ -124,17 +124,17 @@ public class Manager {
   
   /**
    * Add line in DataBase.
-   * @param date.
-   * @param loc.
-   * @param tmin.
-   * @param tmax.
-   * @param tmoy.
-   * @param rain.
-   * @param sun.
-   * @param wind.
-   * @param rafale.
-   * @param dir.
-   * @return bool.
+   * @param date - date
+   * @param loc - location
+   * @param tmin - temperature min
+   * @param tmax - temperature max
+   * @param tmoy - temperature moyenne
+   * @param rain - rain
+   * @param sun - sun
+   * @param wind - wind
+   * @param rafale - rafale
+   * @param dir - direction of the wind
+   * @return bool - true or false.
    */
   public boolean addLigne(String date, String loc, String tmin, 
       String tmax, String tmoy, String rain, String sun, 
@@ -157,7 +157,12 @@ public class Manager {
     return res;
   }
    
-  //ajouter une photo dans la BDD
+  /**
+   * Add a photo in Database.
+   * @param fis - InputStream with image.
+   * @param date - date
+   * @return true or false.
+   */
   public boolean addPhoto(InputStream fis, String date) {
     boolean res = false;
     
@@ -166,9 +171,8 @@ public class Manager {
     ByteArrayOutputStream output = new ByteArrayOutputStream();
     
     try {
-      while ((bytesRead = fis.read(buffer)) != -1)
-      {
-          output.write(buffer, 0, bytesRead);
+      while ((bytesRead = fis.read(buffer)) != -1) {
+        output.write(buffer, 0, bytesRead);
       }
     } catch (IOException e1) {
       e1.printStackTrace();
@@ -185,31 +189,43 @@ public class Manager {
     return res;
   }
   
+  /**
+   * extractData.
+   * @param is - InputStream
+   * @return - ArrayList.
+   * @throws IOException - exception.
+   */
   public static ArrayList<Meteo> extractData(InputStream is) throws IOException {
     ArrayList<Meteo> lMeteo = new ArrayList<Meteo>();
     BufferedReader br = new BufferedReader(new InputStreamReader(is, "UTF-8"));
     br.readLine();
     String line;
-    while((line=br.readLine()) != null) {
-            String [] s = line.split("[\\t| ]");
-            Meteo m = new Meteo();
-            s[0]=s[0]+"-"+s[1]+"-"+s[2];
-            m.setD(s[0]);
-            m.setLocation(s[11]);
-            m.setTemp_min(Double.parseDouble(s[3]));
-            m.setTemp_max(Double.parseDouble(s[4]));
-            m.setTemp_moy(Double.parseDouble(s[5]));
-            m.setRain(Double.parseDouble(s[6]));
-            m.setSun(Double.parseDouble(s[7]));
-            m.setWind(Double.parseDouble(s[8]));
-            m.setRafale(Double.parseDouble(s[9]));
-            m.setDirection(s[10]);
-            lMeteo.add(m);
+    while ((line = br.readLine()) != null) {
+      String [] s = line.split("[\\t| ]");
+      Meteo m = new Meteo();
+      s[0] = s[0] + "-" + s[1] + "-" + s[2];
+      m.setD(s[0]);
+      m.setLocation(s[11]);
+      m.setTemp_min(Double.parseDouble(s[3]));
+      m.setTemp_max(Double.parseDouble(s[4]));
+      m.setTemp_moy(Double.parseDouble(s[5]));
+      m.setRain(Double.parseDouble(s[6]));
+      m.setSun(Double.parseDouble(s[7]));
+      m.setWind(Double.parseDouble(s[8]));
+      m.setRafale(Double.parseDouble(s[9]));
+      m.setDirection(s[10]);
+      lMeteo.add(m);
     }
     br.close();
     return lMeteo;
   }
   
+  /**
+   * addMultipleLines.
+   * @param is - InputStream with txt file.
+   * @return true or false.
+   * @throws IOException - exception.
+   */
   public boolean addMultipleLines(InputStream is) throws IOException {
     
     boolean res = false; 
@@ -224,8 +240,22 @@ public class Manager {
     return res;
   }
   
-  public boolean updateMeteo (String d,String location,double temp_min,double temp_max,
-      double temp_moy,double rain,double sun,double wind,double rafale,String dir) {
+  /**
+   * updateMeteo.
+   * @param d - date
+   * @param location - location
+   * @param temp_min - minimum temperature 
+   * @param temp_max - maximum temperature 
+   * @param temp_moy - average temperature
+   * @param rain - rain
+   * @param sun - sun
+   * @param wind - wind
+   * @param rafale - rafale
+   * @param dir - direction
+   * @return true or false.
+   */
+  public boolean updateMeteo(String d, String location, double temp_min, double temp_max,
+      double temp_moy, double rain, double sun, double wind, double rafale, String dir) {
     boolean res = false;
     
     try {
@@ -236,6 +266,10 @@ public class Manager {
     return res;
   }
 
+  /**
+   * Main for testing.
+   * @param args list of arguments.
+   */
   public static void main(String [] args) {
     Manager m = new Manager();
     try {

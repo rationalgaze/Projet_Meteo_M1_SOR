@@ -26,7 +26,7 @@
 			      <a class="nav-link npill bg-primary text-white"  href="AjoutMany">Ajout Multiple</a>
 			      <a class="nav-link npill bg-primary text-white"  href="AjoutLigne">Ajout d'une Ligne</a>
 			      <a class="nav-link npill bg-primary text-white"  href="AjoutPhoto">Ajouter un photo</a>
-			      <a class="nav-link npill bg-primary text-white"  href="ExportPDF">Exporter en PDF</a>
+			      <a class="nav-link npill bg-primary text-white"  href="ExportPdf">Exporter en PDF</a>
 			      <a class="nav-link npill bg-danger text-white"  href="Deconnection">
 			       <i class="material-icons">exit_to_app</i> 
 			       <span>Se déconnecter</span>

@@ -10,34 +10,39 @@ import javax.servlet.http.HttpServletResponse;
 import manager.Manager;
 
 /**
- * Servlet implementation class Deconnection
+ * Servlet implementation class Deconnection.
  */
 @WebServlet("/Deconnection")
 public class Deconnection extends HttpServlet {
-	private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
        
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public Deconnection() {
-        super();
-    }
-
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+  /**
+   * Constructor.
+   * @see HttpServlet#HttpServlet()
+   */
+  public Deconnection() {
+      super();
+  }
+  
+  /**
+   * Do Get.
+   * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+   */
+  protected void doGet(HttpServletRequest request, HttpServletResponse response)
+      throws ServletException, IOException {
     Manager manager = Manager.creer(request);
-	  manager.setIdentifie(false);
+    manager.setIdentifie(false);
     manager.setIdent(null);
     response.sendRedirect("Accueil");
-	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
-	}
+  }
+  
+  /**
+   * Do Post.
+   * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+   */
+  protected void doPost(HttpServletRequest request, HttpServletResponse response) 
+      throws ServletException, IOException {
+    doGet(request, response);
+  }
 
 }

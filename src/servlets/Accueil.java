@@ -8,31 +8,36 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class ServletAccueil
+ * Servlet implementation class Accueil.
  */
 @WebServlet("/Accueil")
 public class Accueil extends HttpServlet {
-	private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
        
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public Accueil() {
-    }
+  /**
+   * Constructor.
+   * @see HttpServlet#HttpServlet()
+   */
+  public Accueil() {
+  }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setAttribute("contenu", "/WEB-INF/accueil/accueil.jsp");
-		request.getServletContext().getRequestDispatcher("/WEB-INF/header/header.jsp").forward(request, response);
-	}
+  /**
+   * Do get.
+   * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+   */
+  protected void doGet(HttpServletRequest request, HttpServletResponse response) 
+      throws ServletException, IOException {
+    request.setAttribute("contenu", "/WEB-INF/accueil/accueil.jsp");
+    request.getServletContext().getRequestDispatcher("/WEB-INF/header/header.jsp")
+    .forward(request, response);
+  }
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
-	}
-
+  /**
+   * Do post.
+   * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+   */
+  protected void doPost(HttpServletRequest request, HttpServletResponse response) 
+      throws ServletException, IOException {
+    doGet(request, response);
+  }
 }

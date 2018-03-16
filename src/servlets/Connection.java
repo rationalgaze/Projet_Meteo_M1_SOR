@@ -12,63 +12,72 @@ import manager.Manager;
 import validation.Validation;
 
 /**
- * Servlet implementation class ServletConnexion
+ * Servlet implementation class Connexion.
  */
 @WebServlet("/Connection")
 public class Connection extends HttpServlet {
-	private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
        
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public Connection() {
-        super();
-    }
-
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+  /**
+   * Constructor.
+   * @see HttpServlet#HttpServlet()
+   */
+  public Connection() {
+      super();
+  }
+  
+  /**
+   * Do Get.
+   * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+   */
+  protected void doGet(HttpServletRequest request, HttpServletResponse response) 
+      throws ServletException, IOException {
     request.setAttribute("contenu", "/WEB-INF/auth/LoginForm.jsp");
-    request.getServletContext().getRequestDispatcher("/WEB-INF/header/header.jsp").forward(request, response);
-	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String id = request.getParameter("login");
-		String mdp = request.getParameter("mdp");
-		
-		Manager manager = Manager.creer(request);
-		Validation v = new Validation();
-		
-		if (id != null && mdp != null) {
+    request.getServletContext().getRequestDispatcher("/WEB-INF/header/header.jsp")
+    .forward(request, response);
+  }
+  
+  /**
+   * Do Post.
+   * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+   */
+  protected void doPost(HttpServletRequest request, HttpServletResponse response) 
+      throws ServletException, IOException {
+    String id = request.getParameter("login");
+    String mdp = request.getParameter("mdp");
+    
+    Manager manager = Manager.creer(request);
+    Validation v = new Validation();
+    
+    if (id != null && mdp != null) {
       // validation des champs du formulaire
       // test des regexp trouvée dans le bean
       v.regexp(bean.Compte.class,"mail", id);
       v.regexp(bean.Compte.class,"password", mdp);
             
       if (v.isValide()) {
-    		if (manager.auth(id, mdp)) {
-    		  System.out.println("ident OK");
-    		  manager.setIdentifie(true);
-    		  manager.setIdent(id);
-    		  response.sendRedirect("EscpacePersonnel");
-    		  return;
-    		} else {
-    		  System.out.println("err OK");
-    		  request.setAttribute("msg", "Erreur d'identification : le mot de passe ou login ne sont pas correctes.");
-    	    request.setAttribute("contenu", "/WEB-INF/auth/LoginForm.jsp");
-    	    request.getServletContext().getRequestDispatcher("/WEB-INF/header/header.jsp").forward(request, response);
-    		}
+        if (manager.auth(id, mdp)) {
+          System.out.println("ident OK");
+          manager.setIdentifie(true);
+          manager.setIdent(id);
+          response.sendRedirect("EscpacePersonnel");
+          return;
+        } else {
+          System.out.println("err OK");
+          request.setAttribute("msg", 
+              "Erreur d'identification : le mot de passe ou login ne sont pas correctes.");
+          request.setAttribute("contenu", "/WEB-INF/auth/LoginForm.jsp");
+          request.getServletContext().getRequestDispatcher("/WEB-INF/header/header.jsp")
+          .forward(request, response);
+        }
       } else {
         System.out.println("erreur saisie");
         request.setAttribute("v", v);
         request.setAttribute("contenu", "/WEB-INF/auth/LoginForm.jsp");
-        request.getServletContext().getRequestDispatcher("/WEB-INF/header/header.jsp").forward(request, response);
+        request.getServletContext().getRequestDispatcher("/WEB-INF/header/header.jsp")
+        .forward(request, response);
       }
-		}
-	}
+    }
+  }
 
 }

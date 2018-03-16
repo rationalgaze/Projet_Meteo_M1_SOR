@@ -14,60 +14,69 @@ import javax.servlet.http.Part;
 import manager.Manager;
 
 /**
- * Servlet implementation class AjoutZip
+ * Servlet implementation class AjoutMany.
  */
 @WebServlet("/AjoutMany")
 @MultipartConfig(maxFileSize = 16177215) 
 public class AjoutMany extends HttpServlet {
-	private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
        
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public AjoutMany() {
-    }
+  /**
+   * Constructor.
+   * @see HttpServlet#HttpServlet()
+   */
+  public AjoutMany() {
+  }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	  request.setAttribute("content", "/WEB-INF/ajout/ajout_many.jsp");
-	  request.setAttribute("contenu", "/WEB-INF/auth/espaceperso.jsp");
-    request.getServletContext().getRequestDispatcher("/WEB-INF/header/header.jsp").forward(request, response);
-	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	  
+  /**
+   * Do Get.
+   * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+   */
+  protected void doGet(HttpServletRequest request, HttpServletResponse response) 
+      throws ServletException, IOException {
+    request.setAttribute("content", "/WEB-INF/ajout/ajout_many.jsp");
+    request.setAttribute("contenu", "/WEB-INF/auth/espaceperso.jsp");
+    request.getServletContext().getRequestDispatcher("/WEB-INF/header/header.jsp")
+    .forward(request, response);
+  }
+  
+  /**
+   * Do Post.
+   * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+   */
+  protected void doPost(HttpServletRequest request, HttpServletResponse response) 
+      throws ServletException, IOException {
+    
     Manager manager = Manager.creer(request);
-
+  
     Part filePart = request.getPart("zip");
-
-    if(filePart != null) {
+  
+    if (filePart != null) {
       
       InputStream inputStream = null;
       // obtains input stream of the upload file
       inputStream = filePart.getInputStream();
       System.out.println(inputStream);
-      if(manager.addMultipleLines(inputStream)) {
+      if (manager.addMultipleLines(inputStream)) {
         request.setAttribute("msg", "1");
         request.setAttribute("content", "/WEB-INF/ajout/ajout_many.jsp");
         request.setAttribute("contenu", "/WEB-INF/auth/espaceperso.jsp");
-        request.getServletContext().getRequestDispatcher("/WEB-INF/header/header.jsp").forward(request, response);
+        request.getServletContext().getRequestDispatcher("/WEB-INF/header/header.jsp")
+        .forward(request, response);
       } else {
         request.setAttribute("msg", "0");
         request.setAttribute("content", "/WEB-INF/ajout/ajout_many.jsp");
         request.setAttribute("contenu", "/WEB-INF/auth/espaceperso.jsp");
-        request.getServletContext().getRequestDispatcher("/WEB-INF/header/header.jsp").forward(request, response);
+        request.getServletContext().getRequestDispatcher("/WEB-INF/header/header.jsp")
+        .forward(request, response);
       }
     } else {
       request.setAttribute("msg", "0");
       request.setAttribute("content", "/WEB-INF/ajout/ajout_many.jsp");
       request.setAttribute("contenu", "/WEB-INF/auth/espaceperso.jsp");
-      request.getServletContext().getRequestDispatcher("/WEB-INF/header/header.jsp").forward(request, response);
+      request.getServletContext().getRequestDispatcher("/WEB-INF/header/header.jsp")
+      .forward(request, response);
     }
-	}
+  }
 
 }

@@ -1,5 +1,6 @@
 package manager;
 
+import bean.Meteo;
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -14,7 +15,6 @@ import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 
-import bean.Meteo;
 import rmi.ServeurRMI;
 
 
@@ -26,21 +26,28 @@ public class Manager {
   Registry registry;
   DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
   
-  public Manager () {
+  /**
+   * Manager constructor.
+   */
+  public Manager() {
     port = 2000;
     try {
       registry = LocateRegistry.getRegistry(port);
       serveur = (ServeurRMI) registry.lookup("serveurRMI");
       serveur.connect();
       String res = serveur.meth("test");
-      System.out.println("res ICI = "+res);   
-    }
-    catch (Exception e) {
-      System.out.println("Erreur client RMI "+e.getMessage());
+      System.out.println("res ICI = " + res);   
+    } catch (Exception e) {
+      System.out.println("Erreur client RMI " + e.getMessage());
       e.printStackTrace();
     }
   }
   
+  /**
+   * creation of Manager and works like client RMI.
+   * @param request HttpServletRequest
+   * @return Manager.
+   */
   public static Manager creer(HttpServletRequest request) {
     Manager m = (Manager) request.getSession().getAttribute("manager");
     
@@ -55,16 +62,25 @@ public class Manager {
   public boolean isIdentifie() {
     return identifie;
   }
+
   public void setIdentifie(boolean identifie) {
     this.identifie = identifie;
   }
+
   public String getIdent() {
     return ident;
   }
+  
   public void setIdent(String ident) {
     this.ident = ident;
   }
   
+  /**
+   * Authentification method that invokes auth(login, mdp) on RMI server.
+   * @param login - String with login 
+   * @param mdp - String with mdp
+   * @return boolean.
+   */
   public boolean auth(String login, String mdp) {
     boolean res = false;
     try {
@@ -76,6 +92,10 @@ public class Manager {
     return res;
   }
   
+  /**
+   * meteoDuJour.
+   * @return String table.
+   */
   public String[] meteoDuJour() {
     String[] res = null;  
     LocalDateTime now = LocalDateTime.now();
@@ -87,6 +107,10 @@ public class Manager {
     return res;
   }
   
+  /**
+   * meteoMensuelle.
+   * @return String[][].
+   */
   public String[][] meteoMensuelle() {
     String[][] res = null; 
     // LocalDateTime now = LocalDateTime.now(); 
@@ -98,7 +122,20 @@ public class Manager {
     return res;
   }
   
-  // ajouter une ligne dans la BDD
+  /**
+   * Add line in DataBase.
+   * @param date.
+   * @param loc.
+   * @param tmin.
+   * @param tmax.
+   * @param tmoy.
+   * @param rain.
+   * @param sun.
+   * @param wind.
+   * @param rafale.
+   * @param dir.
+   * @return bool.
+   */
   public boolean addLigne(String date, String loc, String tmin, 
       String tmax, String tmoy, String rain, String sun, 
       String wind, String rafale, String dir) {

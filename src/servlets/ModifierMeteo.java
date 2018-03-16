@@ -12,32 +12,38 @@ import manager.Manager;
 import validation.Validation;
 
 /**
- * Servlet implementation class ServletAccueil
+ * Servlet implementation class ModifierMeteo.
  */
 @WebServlet("/ModifierMeteo")
 public class ModifierMeteo extends HttpServlet {
-	private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
        
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public ModifierMeteo() {
-    }
-
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	  request.setAttribute("content", "/WEB-INF/meteo/modify.jsp");
-		request.setAttribute("contenu", "/WEB-INF/auth/espaceperso.jsp");
-		request.getServletContext().getRequestDispatcher("/WEB-INF/header/header.jsp").forward(request, response);
-	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	  Validation v = new Validation();
+  /**
+   * ModifierMeteo.
+   * @see HttpServlet#HttpServlet()
+   */
+  public ModifierMeteo() {
+  }
+  
+  /**
+   * doGet.
+   * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+   */
+  protected void doGet(HttpServletRequest request, HttpServletResponse response) 
+      throws ServletException, IOException {
+    request.setAttribute("content", "/WEB-INF/meteo/modify.jsp");
+    request.setAttribute("contenu", "/WEB-INF/auth/espaceperso.jsp");
+    request.getServletContext().getRequestDispatcher("/WEB-INF/header/header.jsp")
+    .forward(request, response);
+  }
+  
+  /**
+   * doPost.
+   * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+   */
+  protected void doPost(HttpServletRequest request, HttpServletResponse response) 
+      throws ServletException, IOException {
+    Validation v = new Validation();
     Manager manager = Manager.creer(request);
     
     v.regexp(bean.Meteo.class,"d", request.getParameter("date"));
@@ -53,31 +59,38 @@ public class ModifierMeteo extends HttpServlet {
     
     
     if (v.isValide()) {
-      boolean insertion = manager.updateMeteo(request.getParameter("date"), request.getParameter("location"), Double.parseDouble(request.getParameter("min")), 
-          Double.parseDouble(request.getParameter("max")),Double.parseDouble(request.getParameter("moy")), 
-          Double.parseDouble(request.getParameter("rain")), Double.parseDouble(request.getParameter("sun")), 
-          Double.parseDouble(request.getParameter("wind")), Double.parseDouble(request.getParameter("raf")), 
+      boolean insertion = manager.updateMeteo(request.getParameter("date"), 
+          request.getParameter("location"), Double.parseDouble(request.getParameter("min")), 
+          Double.parseDouble(request.getParameter("max")), 
+          Double.parseDouble(request.getParameter("moy")), 
+          Double.parseDouble(request.getParameter("rain")), 
+          Double.parseDouble(request.getParameter("sun")), 
+          Double.parseDouble(request.getParameter("wind")), 
+          Double.parseDouble(request.getParameter("raf")), 
           request.getParameter("dir"));
-      System.out.println("Valid : "+insertion );
+      System.out.println("Valid : " + insertion);
       
-      if(insertion) {
+      if (insertion) {
         request.setAttribute("msg", "0");
         request.setAttribute("content", "/WEB-INF/meteo/modify.jsp");
         request.setAttribute("contenu", "/WEB-INF/auth/espaceperso.jsp");
-        request.getServletContext().getRequestDispatcher("/WEB-INF/header/header.jsp").forward(request, response);
+        request.getServletContext().getRequestDispatcher("/WEB-INF/header/header.jsp")
+        .forward(request, response);
       } else {
         request.setAttribute("msg", "1");
         request.setAttribute("content", "/WEB-INF/meteo/modify.jsp");
         request.setAttribute("contenu", "/WEB-INF/auth/espaceperso.jsp");
-        request.getServletContext().getRequestDispatcher("/WEB-INF/header/header.jsp").forward(request, response);
+        request.getServletContext().getRequestDispatcher("/WEB-INF/header/header.jsp")
+        .forward(request, response);
       }
     } else {
       request.setAttribute("v", v);
       request.setAttribute("msg", "0");
       request.setAttribute("content", "/WEB-INF/meteo/modify.jsp");
       request.setAttribute("contenu", "/WEB-INF/auth/espaceperso.jsp");
-      request.getServletContext().getRequestDispatcher("/WEB-INF/header/header.jsp").forward(request, response);
+      request.getServletContext().getRequestDispatcher("/WEB-INF/header/header.jsp")
+      .forward(request, response);
     }
-	}
+  }
 
 }

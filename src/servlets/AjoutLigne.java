@@ -12,31 +12,37 @@ import manager.Manager;
 import validation.Validation;
 
 /**
- * Servlet implementation class AjoutZip
+ * Servlet implementation class AjoutLigne.
  */
 @WebServlet("/AjoutLigne")
 public class AjoutLigne extends HttpServlet {
-	private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
        
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public AjoutLigne() {
-    }
-
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	  request.setAttribute("content", "/WEB-INF/ajout/ajout_ligne.jsp");
-	  request.setAttribute("contenu", "/WEB-INF/auth/espaceperso.jsp");
-    request.getServletContext().getRequestDispatcher("/WEB-INF/header/header.jsp").forward(request, response);
-	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+  /**
+   * Constructor.
+   * @see HttpServlet#HttpServlet()
+   */
+  public AjoutLigne() {
+  }
+  
+  /**
+   * Do Get.
+   * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+   */
+  protected void doGet(HttpServletRequest request, HttpServletResponse response) 
+      throws ServletException, IOException {
+    request.setAttribute("content", "/WEB-INF/ajout/ajout_ligne.jsp");
+    request.setAttribute("contenu", "/WEB-INF/auth/espaceperso.jsp");
+    request.getServletContext().getRequestDispatcher("/WEB-INF/header/header.jsp")
+    .forward(request, response);
+  }
+  
+  /**
+   * Do Post.
+   * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+   */
+  protected void doPost(HttpServletRequest request, HttpServletResponse response) 
+      throws ServletException, IOException {
     
     Validation v = new Validation();
     Manager manager = Manager.creer(request);
@@ -54,30 +60,34 @@ public class AjoutLigne extends HttpServlet {
     
     
     if (v.isValide()) {
-      boolean insertion = manager.addLigne(request.getParameter("date"), request.getParameter("location"), request.getParameter("min"), request.getParameter("max"), 
-                        request.getParameter("moy"), request.getParameter("rain"), request.getParameter("sun"), 
-                        request.getParameter("wind"), request.getParameter("raf"), request.getParameter("dir"));
-      System.out.println("Valid : "+insertion );
+      boolean insertion = 
+          manager.addLigne(request.getParameter("date"), request.getParameter("location"), 
+          request.getParameter("min"), request.getParameter("max"), 
+          request.getParameter("moy"), request.getParameter("rain"), request.getParameter("sun"), 
+          request.getParameter("wind"), request.getParameter("raf"), request.getParameter("dir"));
+      System.out.println("Valid : " + insertion);
       
-      if(insertion) {
+      if (insertion) {
         request.setAttribute("msg", "0");
         request.setAttribute("content", "/WEB-INF/ajout/ajout_ligne.jsp");
         request.setAttribute("contenu", "/WEB-INF/auth/espaceperso.jsp");
-        request.getServletContext().getRequestDispatcher("/WEB-INF/header/header.jsp").forward(request, response);
+        request.getServletContext().getRequestDispatcher("/WEB-INF/header/header.jsp")
+        .forward(request, response);
       } else {
         request.setAttribute("msg", "1");
         request.setAttribute("content", "/WEB-INF/ajout/ajout_ligne.jsp");
         request.setAttribute("contenu", "/WEB-INF/auth/espaceperso.jsp");
-        request.getServletContext().getRequestDispatcher("/WEB-INF/header/header.jsp").forward(request, response);
+        request.getServletContext().getRequestDispatcher("/WEB-INF/header/header.jsp")
+        .forward(request, response);
       }
     } else {
       request.setAttribute("v", v);
       request.setAttribute("msg", "1");
       request.setAttribute("content", "/WEB-INF/ajout/ajout_ligne.jsp");
       request.setAttribute("contenu", "/WEB-INF/auth/espaceperso.jsp");
-      request.getServletContext().getRequestDispatcher("/WEB-INF/header/header.jsp").forward(request, response);
+      request.getServletContext().getRequestDispatcher("/WEB-INF/header/header.jsp")
+      .forward(request, response);
     }
-
-	}
+  }
 
 }

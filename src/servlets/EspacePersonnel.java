@@ -8,32 +8,38 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class ServletAccueil
+ * Servlet implementation class EscpacePersonnel.
  */
 @WebServlet("/EscpacePersonnel")
 public class EspacePersonnel extends HttpServlet {
-	private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
        
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public EspacePersonnel() {
-    }
-
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	  request.setAttribute("content", "/WEB-INF/meteo/show.jsp");
-		request.setAttribute("contenu", "/WEB-INF/auth/espaceperso.jsp");
-		request.getServletContext().getRequestDispatcher("/WEB-INF/header/header.jsp").forward(request, response);
-	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
-	}
+  /**
+   * Constructor.
+   * @see HttpServlet#HttpServlet()
+   */
+  public EspacePersonnel() {
+  }
+  
+  /**
+   * Do Get.
+   * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+   */
+  protected void doGet(HttpServletRequest request, HttpServletResponse response) 
+      throws ServletException, IOException {
+    request.setAttribute("content", "/WEB-INF/meteo/show.jsp");
+    request.setAttribute("contenu", "/WEB-INF/auth/espaceperso.jsp");
+    request.getServletContext().getRequestDispatcher("/WEB-INF/header/header.jsp")
+    .forward(request, response);
+  }
+  
+  /**
+   * Do Post.
+   * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+   */
+  protected void doPost(HttpServletRequest request, HttpServletResponse response) 
+      throws ServletException, IOException {
+    doGet(request, response);
+  }
 
 }
